@@ -1,10 +1,28 @@
-h1{
-    color: red;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.sidebarItem {
+    @apply py-3 bg-slate-800 rounded mx-3 pl-5 cursor-pointer hover:bg-slate-600;
 }
+
+.todoItem {
+    @apply py-3 bg-slate-800 rounded cursor-pointer hover:bg-slate-600;
+}
+
+.my-drawer li {
+    @apply py-2 px-2 bg-slate-800 rounded cursor-pointer hover:bg-slate-600;
+}
+
+.my-drawer a {
+    @apply flex gap-3 items-center;
+}
+
 .completed{
     text-decoration: line-through;
     color: gray;
 }
-.not{
-    text-decoration: underline;
+
+.hidden {
+    display: none;
 }

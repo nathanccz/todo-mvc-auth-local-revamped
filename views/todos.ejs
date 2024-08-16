@@ -5,28 +5,218 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">
+    <% if (onlyImportant) { %>
+    <link rel="stylesheet" href="../css/output.css">
+    <% } else { %>
+    <link rel="stylesheet" href="css/output.css">
+    <% } %>
 </head>
-<body>
-    <h1>Todos</h1>
-    <ul>
-    <% todos.forEach( el => { %>
-            <li class='todoItem' data-id='<%=el._id%>'>
-                <span class='<%= el.completed === true ? 'completed' : 'not'%>'><%= el.todo %></span>
-                <span class='del'> Delete </span>
-            </li>
-    <% }) %>    
-    </ul>
+    
+    <body class="relative">
+        <div class="flex" id="pageWrapper">
+            <aside class="flex w-80 flex-col">
+                <div class="flex mb-8 mt-4 mx-4">
+                    <div class="avatar placeholder">
+                        <div class="bg-neutral text-neutral-content w-16 rounded-full">
+                          <span class="text-xl"><%= user.userName[0].toUpperCase() %></span>
+                        </div>
+                    </div>
+                    <div class="mt-2 ml-3">
+                        <h3 class="font-bold"><%= user.userName %></h3>
+                        <span><%= user.email %></span>
+                    </div>
+                </div>
+                <ul class="flex w-full gap-3 flex-col">
+                    <li>
+                        <a href="/todos" class="sidebarItem flex justify-between items-center">
+                            <div>
+                                <i class="fa-solid fa-sun"></i> 
+                                <span class="ml-3">Today</span>
+                            </div>
+                            <div class="avatar placeholder">
+                                <div class="bg-neutral text-neutral-content w-8 rounded-full mr-4">
+                                <span class="text-xs font-bold">UI</span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a href="todos/getImportant" class="sidebarItem flex justify-between items-center">
+                            <div>
+                                <i class="fa-solid fa-star"></i>
+                                <span class="ml-3">Important</span>
+                            </div>
+                            <div class="avatar placeholder">
+                                <div class="bg-neutral text-neutral-content w-8 rounded-full mr-4">
+                                <span class="text-xs font-bold"><%=important%></span>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.google.com" target="_blank" class="sidebarItem flex justify-between items-center">
+                            <div>
+                                <i class="fa-regular fa-calendar-days"></i> 
+                                <span class="ml-3">Planned</span>
+                            </div>
+                            <div class="avatar placeholder">
+                                <div class="bg-neutral text-neutral-content w-8 rounded-full mr-4">
+                                <span class="text-xs font-bold">UI</span>
+                                </div>
+                            </div> 
+                        </a>
+                    </li>
+                    <li class="sidebarItem flex justify-between">
+                        <div>
+                            <i class="fa-solid fa-list-check"></i> 
+                            <span class="ml-3">All Tasks</span>
+                        </div>
+                        <div class="avatar placeholder">
+                            <div class="bg-neutral text-neutral-content w-8 rounded-full mr-4">
+                              <span class="text-xs font-bold"><%=todos.length%></span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <a href="/logout"><button class="btn btn-outline mt-8 mx-7 w-4/5"><i class="fa-solid fa-right-from-bracket"></i>Log Out</button></a>
+            </aside>
 
-    <h2><%= user.userName %> has <%= left %> things left to do.</h2>
+            <main class="p-10 bg-slate-900 w-full h-screen">
+                <h1 class="text-4xl font-bold mb-2">Today</h1>
+                <span>August 14, 2024</span>
 
-    <form action="/todos/createTodo" method='POST'>
-        <input type="text" placeholder="Enter Todo Item" name='todoItem'>
-        <input type="submit">
-    </form>
+                <% if (todos.length > 0) { %>
+                    
+                <div class="todoItems h-4/5 overflow-auto rounded">
+                    <ul class="flex flex-col gap-3 mt-5">
+                        <% todos.forEach( (el, ind) => { %>
+                        <li class="todoItem flex justify-between">
+                            <div data-id="<%=el._id%>">
+                                <input type="checkbox" class="checkbox ml-3 todoCheckbox" <% if (el.completed === true) { %> checked <% } %>/>
+                                <span class="ml-5 <%= el.completed === true ? 'completed' : 'not'%>" data-id='<%=el._id%>'><%= el.todo %></span>
+                            </div>
+                            <div>
+                                <div class="mr-4" data-id="<%=el._id%>">
+                                    <i class="<%= el.important === true ? 'fa-solid' : 'fa-regular'%> fa-star hover:opacity-70 <%= el.important === true ? 'important' : 'notImportant'%>"></i>
+                                </div>
+                            </div>
+                        </li>
+                        <% }) %>  
+                    </ul>
+                </div>  
+                
+            
 
-    <a href="/logout">Logout</a>
+                <% } else {%>  
+        
+                    <h2>There is nothing here, yet.</h2>
+        
+                <% } %> 
 
+
+                <form action="/todos/createTodo" method='POST' class="mt-10">
+                    <input
+                    type="text"
+                    placeholder="Enter Todo Item"
+                    name='todoItem'
+                    autocomplete="off"
+                    class="input input-bordered input-primary w-full max-w-xs" />
+                    <button class="btn btn-primary ml-2">Add Task</button>
+                </form>
+            </main>
+        </div>
+
+        <div class="my-drawer h-screen absolute right-0 top-0 pl-10 pr-8 pt-8 bg-slate-800 hidden" id="my-drawer">
+            <div class="absolute top-3 left-3 cursor-pointer hover:opacity-75 text-xl chevron">
+                <i class="fa-solid fa-chevron-right"></i>
+            </div>
+            <ul class="flex flex-col gap-3">
+                <li>
+                    <a>
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Add to Today's List</span>
+                    </a>
+                </li>
+                <li onclick="edit_modal.showModal()">
+                    <a>
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Edit To-Do Item</span></a>
+                    </li>
+                <li>
+                    <a>
+                        <i class="fa-regular fa-star"></i>
+                        <span>Mark as Important</span>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <i class="fa-solid fa-square-check"></i>
+                        <span>Mark as Completed</span>
+                    </a>
+                </li>
+                <div class="divider m-0"></div>
+                <li>
+                    <a>
+                        <i class="fa-solid fa-calendar-day"></i>
+                        <span>Due Today</span>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <i class="fa-regular fa-calendar-plus"></i>
+                        <span>Due Tomorrow</span>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <i class="fa-solid fa-calendar-days"></i>
+                        <span>Pick a Due Date</span>
+                    </a>
+                </li>
+                <div class="divider m-0"></div>
+                <li onclick="del_modal.showModal()">
+                    <a>
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Delete Task</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <dialog id="del_modal" class="modal">
+            <div class="modal-box">
+                <h3 class="text-lg font-bold">Delete Task?</h3>
+                <p class="py-4">This item will be permanently deleted.</p>
+                <div class="modal-action" data-id="">
+                    <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn">Cancel</button>
+                    </form>
+                    <button class="btn del">Delete</button>
+                </div>
+            </div>
+        </dialog>
+
+        <dialog id="edit_modal" class="modal">
+            <div class="modal-box" data-id=''>
+                <h3 class="text-lg font-bold">Edit To-Do Item</h3>
+                <input
+                    value=""
+                    type="text"
+                    class="input input-bordered input-info w-full mt-5 edit-input" />
+                <div class="modal-action" data-id=''>
+                    <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn">Cancel</button>
+                    </form>
+                    <button class="btn edit">Change</button>
+                </div>
+            </div>
+        </dialog>
+    
+    <script src="https://kit.fontawesome.com/45ea450325.js" crossorigin="anonymous"></script>
     <script src="js/main.js"></script>
+    
 </body>
 </html>

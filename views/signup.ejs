@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/output.css">
     <title>Document</title>
 </head>
 <body>
@@ -12,12 +13,88 @@
             <div class="alert alert-danger"><%= el.msg %></div>
         <% }) %>    
     <% } %>
-    <form action="/signup" method="POST">
-        <input type="text" name="userName" placeholder="User Name">
-        <input type="email" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <input type="password" name="confirmPassword" placeholder="Confirm Password">
-        <input type="submit">
-    </form>
+    
+    <section
+  class="ezy__signup15 dark flex items-center justify-center py-14 md:py-24 bg-white dark:bg-[#0b1727] text-black text-opacity-90 dark:text-white"
+>
+  <div class="container px-4 mx-auto">
+    <div class="flex justify-center">
+      <div class="w-full md:w-2/3">
+        <div class="bg-white dark:bg-slate-800 shadow-xl p-6 lg:p-12">
+          <div class="flex flex-wrap justify-between items-center">
+            <div class="w-full lg:w-1/2 lg:order-2">
+              <div class="flex flex-col items-center justify-center h-full mt-12 lg:mt-0">
+                <img src="https://cdn.easyfrontend.com/pictures/sign-in-up/abstract1.png" alt="" />
+                <div class="text-center mt-12">
+                  <a href="#!" class="underline hover:text-blue-600 duration-300">I am already a member</a>
+                </div>
+              </div>
+            </div>
+            <div class="w-full lg:w-1/2 mt-6 lg:mt-0">
+              <div class="flex flex-col h-full p-2 lg:p-6 xl:p-12">
+                <h2 class="text-3xl md:text-[45px] font-bold mb-2">Sign Up</h2>
+                <form action="/signup" method="POST">
+                  <div class="w-full relative mb-6">
+                    <input
+                      type="text"
+                      class="bg-transparent border-b border-black dark:border-gray-200 focus:outline-none focus:border-blue-600 text-sm w-full py-2"
+                      name="userName"
+                      placeholder="Username"
+                    />
+                    <i class="fas fa-user absolute top-1/2 -translate-y-1/2 right-2 opacity-80"></i>
+                  </div>
+                  <div class="w-full relative mb-6">
+                    <input
+                      type="email"
+                      class="bg-transparent border-b border-black dark:border-gray-200 focus:outline-none focus:border-blue-600 text-sm w-full py-2"
+                      name="email"
+                      placeholder="Email Address"
+                    />
+                    <i class="fas fa-envelope absolute top-1/2 -translate-y-1/2 right-2 opacity-80"></i>
+                  </div>
+                  <div class="w-full relative mb-6">
+                    <input
+                      type="pass"
+                      class="bg-transparent border-b border-black dark:border-gray-200 focus:outline-none focus:border-blue-600 text-sm w-full py-2"
+                      name="password"
+                      placeholder="Password"
+                    />
+                    <i class="fas fa-lock absolute top-1/2 -translate-y-1/2 right-2 opacity-80"></i>
+                  </div>
+                  <div class="w-full relative mb-6">
+                    <input
+                      type="pass"
+                      class="bg-transparent border-b border-black dark:border-gray-200 focus:outline-none focus:border-blue-600 text-sm w-full py-2"
+                      name="confirmPassword"
+                      placeholder="Confirm Password"
+                    />
+                    <i class="fas fa-lock absolute top-1/2 -translate-y-1/2 right-2 opacity-80"></i>
+                  </div>
+                  <div class="form-group mb-3">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="remember-me" checked />
+                      <label class="form-check-label" for="remember-me"
+                        >I agree all statements in
+                        <a href="#" class="underline hover:text-blue-600">Terms & Conditions</a>
+                      </label>
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="bg-blue-600 py-4 px-10 text-white hover:bg-opacity-95 duration-300 mt-4"
+                  >
+                    Create Account <i class="fas fa-arrow-right"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 </body>
 </html>

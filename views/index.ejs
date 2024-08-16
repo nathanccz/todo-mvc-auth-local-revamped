@@ -4,11 +4,294 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="css/output.css">
+    <title>To-Do List App</title>
 </head>
 <body>
-    <h1>Create Your VERY OWN Todolist!</h1>
-    <a href="/login"> Login</a>
-    <a href="/signup"> Signup</a>
+    <div
+  class="ezy__nav2 dark py-6 bg-white dark:bg-[#0b1727] text-zinc-900 dark:text-white relative"
+>
+  <nav>
+    <div class="container px-4">
+      <div class="flex justify-between items-center">
+        <a class="font-black text-3xl" href="#"> To-Do List Creator </a>
+        <button
+          class="block lg:hidden cursor-pointer h-10 z-20"
+          type="button"
+          id="hamburger"
+        >
+          <div
+            class="h-0.5 w-7 bg-black dark:bg-white -translate-y-2"
+          ></div>
+          <div class="h-0.5 w-7 bg-black dark:bg-white"></div>
+          <div class="h-0.5 w-7 bg-black dark:bg-white translate-y-2"></div>
+        </button>
+        <ul
+          class="flex flex-col lg:flex-row justify-center items-center text-3xl gap-6 lg:text-base lg:gap-2 absolute h-screen w-screen top-0 left-full lg:left-0 lg:relative lg:h-auto lg:w-auto bg-white dark:bg-[#0b1727] lg:bg-transparent"
+          id="navbar"
+        >
+          <li class="">
+            <a class="px-4 opacity-100" href="#">Home</a>
+          </li>
+          <li class="">
+            <a class="px-4 opacity-50 hover:opacity-100" href="#"
+              >How It Works</a
+            >
+          </li>
+          <li class="">
+            <a class="px-4 opacity-50 hover:opacity-100" href="#"
+              >Features</a
+            >
+          </li>
+          <li class="">
+            <a class="px-4 opacity-50 hover:opacity-100" href="#"
+              >Testimonials</a
+            >
+          </li>
+          <li>
+            <a href="/signup"><button
+              class="border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white py-1.5 px-4 rounded"
+            >
+              Sign Up
+            </button></a>
+          </li>
+          <li>
+            <a href="/login"><button
+              class="border border-blue-600 bg-blue-600 text-white hover:bg-opacity-90 py-1.5 px-4 rounded"
+            >
+              Log In
+            </button></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>
+
+    <header
+  class="ezy__header40 dark py-14 md:py-24 bg-white dark:bg-[#0b1727] text-zinc-900 dark:text-white relative overflow-hidden z-10"
+>
+  <!-- svg one -->
+  <img
+    src="https://cdn.easyfrontend.com/pictures/hero/header34-svg1.png"
+    alt=""
+    class="absolute top-0 left-0 max-w-full h-auto hidden md:block"
+  />
+  <!-- svg two -->
+  <img
+    src="https://cdn.easyfrontend.com/pictures/hero/header34-svg2.png"
+    alt=""
+    class="absolute bottom-0 left-0 max-w-full h-auto hidden md:block"
+  />
+
+  <!-- shape -->
+  <div
+    class="absolute top-0 right-[8%] h-full w-64 bg-slate-100 dark:bg-slate-800 rounded-3xl hidden md:block -z-10"
+  >
+    <!-- svg three -->
+    <img
+      src="https://cdn.easyfrontend.com/pictures/hero/header34-svg3.png"
+      alt=""
+      class="absolute top-[10%] left-0 text-blue-600 max-w-full h-auto hidden md:block"
+    />
+    <!-- svg four -->
+    <img
+      src="https://cdn.easyfrontend.com/pictures/hero/header34-svg4.png"
+      alt=""
+      class="absolute bottom-0 end-0 max-w-full h-auto hidden md:block"
+    />
+  </div>
+
+  <div class="container px-4 mx-auto relative">
+    <div class="grid grid-cols-12 gap-6 items-center">
+      <div
+        class="col-span-12 lg:col-span-6 xl:pr-12 text-center lg:text-start"
+      >
+        <h2 class="text-2xl font-bold leading-tight md:text-7xl mb-6">
+            Achieve your goals one step at a time.
+        </h2>
+        <p class="text-xl leading-relaxed opacity-80 mb-12">
+            Create your very own to-do list to keep your productivity 
+            on track. Add due dates, filter by importance, and more!
+        </p>
+        <a
+          href="/login"
+          class="py-3 px-8 text-white bg-blue-600 hover:bg-opacity-90 rounded"
+          >Log In</a
+        >
+      </div>
+      <div class="col-span-12 lg:col-span-6">
+        <img
+          src="https://cdn.easyfrontend.com/pictures/hero/header34-img.png"
+          alt=""
+          class="rounded-xl max-w-full h-auto mx-auto mt-4 md:mt-0"
+        />
+      </div>
+    </div>
+  </div>
+</header>
+
+<section
+  class="ezy__service20 light py-14 md:py-24 bg-gray-50 dark:bg-[#23354b] text-zinc-900 dark:text-white relative z-[1] overflow-hidden"
+>
+  <!-- shape one -->
+  <svg
+    class="absolute -bottom-[20%] left-0 -z-[1]"
+    width="405"
+    height="626"
+    viewBox="0 0 405 626"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect
+      x="-302.65"
+      y="296.986"
+      width="433.92"
+      height="140"
+      rx="73.8464"
+      transform="rotate(-33.796 -302.65 296.986)"
+      fill="#7434F8"
+      fill-opacity="0.5"
+    />
+    <rect
+      x="-315"
+      y="502.403"
+      width="666.584"
+      height="140"
+      rx="73.8464"
+      transform="rotate(-33.796 -315 502.403)"
+      fill="#FAA515"
+      fill-opacity="0.5"
+    />
+  </svg>
+  <!-- shape two -->
+  <svg
+    class="absolute -top-[20%] right-0 -z-[1]"
+    width="340"
+    height="658"
+    viewBox="0 0 495 778"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="389" cy="389" r="389" fill="#0d6efd" fill-opacity="0.19" />
+  </svg>
+
+  <div class="container px-4 mx-auto">
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-12 md:col-span-4">
+        <h2 class="text-3xl md:text-[40px] font-bold leading-normal mb-4">
+          The Best Stories are told in the desert. What Noman known for...
+        </h2>
+        <p class="text-[17px] leading-normal opacity-80">
+          An activity that requires a person's mental or physical effort is work.If a person is trained for a
+          certain type physical effort.
+        </p>
+      </div>
+      <div class="col-span-12 md:col-span-8">
+        <div class="grid grid-cols-2 gap-6 gap-x-5">
+          <div class="col-span-2 md:col-span-1">
+            <div>
+              <div class="bg-white dark:bg-slate-800 shadow h-full p-3">
+                <div class="p-4 lg:p-8">
+                  <div class="text-[40px] text-blue-600 mb-2">
+                    <i class="fas fa-cannabis"></i>
+                  </div>
+                  <h5 class="text-xl font-medium my-4">Product Design</h5>
+                  <p class="opacity-75 mt-3">
+                    Banks likewise put away cash to develop their hold of cash. What they do is directed by laws.
+                    Those laws vary in various nations.
+                  </p>
+                </div>
+              </div>
+              <div class="bg-white dark:bg-slate-800 shadow h-full p-3 mt-4">
+                <div class="p-4 lg:p-8">
+                  <div class="text-[40px] text-blue-600 mb-2">
+                    <i class="fas fa-ribbon"></i>
+                  </div>
+                  <h5 class="text-xl font-medium my-6">Date Entry</h5>
+                  <p class="opacity-75 mt-4">
+                    Banks likewise put away cash to develop their hold of cash. What they do is directed by laws.
+                    Those laws vary in various nations.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-span-2 md:col-span-1">
+            <div class="md:mt-12">
+              <div class="bg-white dark:bg-slate-800 shadow h-full p-3 md:mt-4">
+                <div class="p-4 lg:p-8">
+                  <div class="text-[40px] text-blue-600 mb-2">
+                    <i class="fas fa-camera"></i>
+                  </div>
+                  <h5 class="text-xl font-medium my-6">File Manager</h5>
+                  <p class="opacity-75 mt-4">
+                    Banks likewise put away cash to develop their hold of cash. What they do is directed by laws.
+                    Those laws vary in various nations.
+                  </p>
+                </div>
+              </div>
+              <div class="bg-white dark:bg-slate-800 shadow h-full p-3 mt-4">
+                <div class="p-4 lg:p-8">
+                  <div class="text-[40px] text-blue-600 mb-2">
+                    <i class="fab fa-asymmetrik"></i>
+                  </div>
+                  <h5 class="text-xl font-medium my-6">Get your documentation</h5>
+                  <p class="opacity-75 mt-4">
+                    Banks likewise put away cash to develop their hold of cash. What they do is directed by laws.
+                    Those laws vary in various nations.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ezy__copyright6 dark bg-white dark:bg-[#0b1727] text-zinc-900 dark:text-white">
+    <div class="text-center lg:text-start py-12">
+      <div class="container px-16 md:px-8 lg:px-28">
+        <div class="grid grid-cols-12 justify-between items-center">
+          <div class="col-span-12 lg:col-span-4">
+            <p class="mb-2 lg:mb-0">Copyright all rights reserved</p>
+          </div>
+          <div class="col-span-12 lg:col-span-4">
+            <ul class="flex justify-center">
+              <li class="my-2 mx-4">
+                <a class="hover:opacity-80" href="#">Home</a>
+              </li>
+              <li class="my-2 mx-4">
+                <a class="hover:opacity-80" href="#">About</a>
+              </li>
+              <li class="my-2 mx-4">
+                <a class="hover:opacity-80" href="#">Contact</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-span-12 lg:col-span-4 flex justify-center lg:justify-end">
+            <ul class="ezy__copyright1-social flex">
+              <li class="m-2">
+                <a href="" class="hover:text-blue-600"><i class="fab fa-facebook"></i></a>
+              </li>
+              <li class="m-2">
+                <a href="" class="hover:text-blue-600"><i class="fab fa-twitter"></i></a>
+              </li>
+              <li class="m-2">
+                <a href="" class="hover:text-blue-600"><i class="fab fa-pinterest"></i></a>
+              </li>
+              <li class="m-2">
+                <a href="" class="hover:text-blue-600"><i class="fab fa-linkedin"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script src="https://kit.fontawesome.com/45ea450325.js" crossorigin="anonymous"></script>
 </body>
 </html>
