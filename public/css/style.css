@@ -10,7 +10,7 @@
     @apply py-3 bg-slate-800 rounded cursor-pointer hover:bg-slate-600;
 }
 
-.my-drawer li {
+.my-drawer li:not(.nohover) {
     @apply py-2 px-2 bg-slate-800 rounded cursor-pointer hover:bg-slate-600;
 }
 
@@ -25,4 +25,13 @@
 
 .hidden {
     display: none;
+}
+
+html, 
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
 }

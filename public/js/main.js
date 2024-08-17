@@ -172,9 +172,11 @@ function openModal(event) {
 
     const todoId = this.childNodes[1].dataset.id
 
-    const editInputValue = this.childNodes[1].innerText
+    const todoItemText = this.childNodes[1].innerText
+
+    document.querySelector('.my-drawer-header').textContent = todoItemText
     
-    document.querySelector('.edit-input').value = editInputValue
+    document.querySelector('.edit-input').value = todoItemText
 
     Array.from(document.querySelectorAll('.modal-action')).forEach(el => {
         el.setAttribute('data-id', todoId)

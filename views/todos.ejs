@@ -94,7 +94,7 @@
                         <li class="todoItem flex justify-between">
                             <div data-id="<%=el._id%>">
                                 <input type="checkbox" class="checkbox ml-3 todoCheckbox" <% if (el.completed === true) { %> checked <% } %>/>
-                                <span class="ml-5 <%= el.completed === true ? 'completed' : 'not'%>" data-id='<%=el._id%>'><%= el.todo %></span>
+                                <span class="ml-5 font-bold <%= el.completed === true ? 'completed' : 'not'%>" data-id='<%=el._id%>'><%= el.todo %></span>
                             </div>
                             <div>
                                 <div class="mr-4" data-id="<%=el._id%>">
@@ -127,10 +127,13 @@
             </main>
         </div>
 
-        <div class="my-drawer h-screen absolute right-0 top-0 pl-10 pr-8 pt-8 bg-slate-800 hidden" id="my-drawer">
+        <div class="my-drawer h-screen absolute right-0 top-0 pl-12 w-96 pr-8 pt-8 bg-slate-800 hidden rounded-l-2xl" id="my-drawer">
             <div class="absolute top-3 left-3 cursor-pointer hover:opacity-75 text-xl chevron">
                 <i class="fa-solid fa-chevron-right"></i>
             </div>
+            
+            <h2 class="my-drawer-header text-2xl font-bold mb-5 mt-2 w-80"></h2>
+    
             <ul class="flex flex-col gap-3">
                 <li>
                     <a>
@@ -173,6 +176,14 @@
                         <i class="fa-solid fa-calendar-days"></i>
                         <span>Pick a Due Date</span>
                     </a>
+                </li>
+                <div class="divider m-0"></div>
+                <li class="nohover">
+                    <textarea class="textarea textarea-primary w-full mb-3"></textarea>
+                    <div class="flex justify-end gap-3">
+                        <button class="btn btn-outline px-8 py-2">View Notes</button>
+                        <button class="btn btn-outline btn-accent px-8 py-2">Save</button>
+                    </div>
                 </li>
                 <div class="divider m-0"></div>
                 <li onclick="del_modal.showModal()">
