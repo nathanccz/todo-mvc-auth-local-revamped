@@ -25,4 +25,6 @@ router.post('/addTodoNote', todosController.addTodoNote)
 
 router.get('/getTodoNote', todosController.getTodoNote)
 
+router.put('/updateTodoNote', todosController.updateTodoNote)
+
 module.exports = router

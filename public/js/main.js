@@ -9,6 +9,7 @@ const importantStars = Array.from(document.querySelectorAll('.important'))
 const todoItemsAll = document.querySelectorAll('.todoItem')
 const closeButton = document.querySelector('.chevron')
 const notesTextArea = document.querySelector('.notesTextArea')
+const lastUpdatedSpan = document.querySelector('.lastUpdated')
 
 Array.from(deleteBtn).forEach((el)=>{
     el.addEventListener('click', deleteTodo)
@@ -49,6 +50,17 @@ Array.from(todoItemsAll).forEach((el)=>{
 closeButton.addEventListener('click', closeModal)
 
 document.querySelector('.saveNoteBtn').addEventListener('click', addTodoNote)
+
+window.onload = (event) => {
+    console.log(this.childNodes)
+    if (localStorage.getItem('todoId')) {
+        let todoId = localStorage.getItem('todoId')
+        let todoItem = localStorage.getItem('todoItem')
+        openModal(event, todoId, todoItem)
+    }
+};
+
+
 
 async function deleteTodo(){
     const todoId = this.parentNode.dataset.id
@@ -165,7 +177,8 @@ async function markNotImportant() {
     }
 }
 
-async function openModal(event) {
+async function openModal(event, todoIdFromLS, todoItemFromLS) {
+
     if (event.target.tagName === 'I' || event.target.tagName === 'INPUT') return
 
     document.querySelector('.my-drawer').classList.remove('hidden')
@@ -173,28 +186,33 @@ async function openModal(event) {
 
     todoItemsAll.forEach(el => el.removeEventListener('click', openModal))
 
-    const todoId = this.childNodes[1].dataset.id
-
-    const todoItemText = this.childNodes[1].innerText
+    let todoId, todoItemText
+    
+   if (this.childNodes) {
+        todoId = this.childNodes[1].dataset.id 
+        todoItemText = this.childNodes[1].innerText
+   } else {
+        todoId = todoIdFromLS
+        todoItemText = todoItemFromLS
+   }
 
     document.querySelector('.my-drawer-header').textContent = todoItemText
-    
     document.querySelector('.edit-input').value = todoItemText
-
     document.querySelector('.saveNoteBtn').setAttribute('data-id', todoId)
 
     Array.from(document.querySelectorAll('.modal-action')).forEach(el => {
         el.setAttribute('data-id', todoId)
     })
-
-    //Fetch notes to fill textarea:
   
     const response = await fetch(`/todos/getTodoNote?id=${todoId}`)
     const data = await response.json()
     console.log(data)
     
     if (data.note === "Note doesn't exist.") notesTextArea.textContent = "Add notes."
-        else notesTextArea.textContent = data.note
+        else {
+            notesTextArea.textContent = data.note
+            lastUpdatedSpan.textContent = `Last updated: ${data.date}`
+        }
 
 }
 
@@ -207,6 +225,9 @@ function closeModal() {
     })
 
     notesTextArea.textContent = ''
+    lastUpdatedSpan.textContent = ''
+
+    localStorage.clear()
 }
 
 
@@ -219,10 +240,20 @@ notesTextArea.addEventListener('input', () => {
 async function addTodoNote() {
     const todoId = this.dataset.id
     const noteText = document.querySelector('.notesTextArea').textContent
-    
+    const todoItem = document.querySelector('.my-drawer-header').textContent
+    let method, URI
+
+    if (lastUpdatedSpan.textContent === '') {
+        method = 'post'
+        URI = 'todos/addTodoNote'
+    } else {
+        method = 'put'
+        URI = 'todos/updateTodoNote'
+    }
+
     try {
-        const response = await fetch('todos/addTodoNote', {
-            method: 'post',
+        const response = await fetch(URI, {
+            method: method,
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
                 'todoId': todoId,
@@ -231,6 +262,8 @@ async function addTodoNote() {
         })
         const data = await response.json()
         console.log(data)
+        localStorage.setItem('todoId', todoId)
+        localStorage.setItem('todoItem', todoItem)
         location.reload()
     } catch (error) {
         console.log(error)

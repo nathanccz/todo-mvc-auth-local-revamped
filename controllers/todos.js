@@ -1,5 +1,6 @@
 const Todo = require('../models/Todo')
 const Note = require('../models/Note')
+const moment = require('moment')
 
 module.exports = {
     getTodos: async (req,res)=>{
@@ -107,9 +108,10 @@ module.exports = {
     addTodoNote: async (req, res) => {
     
         try{
+            const date = Date.now()
             await Note.create({note: req.body.note, userId: req.user.id, todoId: req.body.todoId})
             console.log('Note has been added!')
-            res.redirect('/todos')
+            res.json('Note has been added!')
         }catch(err){
             console.log(err)
         }
@@ -118,9 +120,22 @@ module.exports = {
         console.log(req.query.id)
         try {
             const notes = await Note.find({userId: req.user.id, todoId: req.query.id})
-            console.log(notes)
             if (notes.length === 0) return res.json({"note": "Note doesn't exist."})
-            else return res.json({"note": notes[0].note})
+                else {
+                    const date = moment(notes[0].modifiedAt).calendar()
+                    return res.json({"note": notes[0].note, "date": date})
+                }
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    updateTodoNote: async (req, res) => {
+        try {
+            await Note.findOneAndUpdate({userId: req.user.id, todoId: req.body.todoId}, {
+                note: req.body.note,
+                modifiedAt: new Date()
+            })
+            res.json('Note updated!')
         } catch (error) {
             console.log(error)
         }

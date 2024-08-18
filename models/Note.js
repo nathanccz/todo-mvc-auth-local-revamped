@@ -5,9 +5,9 @@ const NoteSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  createdAt: {
+  modifiedAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   todoId: {
     type: String,
