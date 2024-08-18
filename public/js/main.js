@@ -8,6 +8,7 @@ const notImportantStars = Array.from(document.querySelectorAll('.notImportant'))
 const importantStars = Array.from(document.querySelectorAll('.important'))
 const todoItemsAll = document.querySelectorAll('.todoItem')
 const closeButton = document.querySelector('.chevron')
+const notesTextArea = document.querySelector('.notesTextArea')
 
 Array.from(deleteBtn).forEach((el)=>{
     el.addEventListener('click', deleteTodo)
@@ -46,6 +47,8 @@ Array.from(todoItemsAll).forEach((el)=>{
 })
 
 closeButton.addEventListener('click', closeModal)
+
+document.querySelector('.saveNoteBtn').addEventListener('click', addTodoNote)
 
 async function deleteTodo(){
     const todoId = this.parentNode.dataset.id
@@ -162,7 +165,7 @@ async function markNotImportant() {
     }
 }
 
-function openModal(event) {
+async function openModal(event) {
     if (event.target.tagName === 'I' || event.target.tagName === 'INPUT') return
 
     document.querySelector('.my-drawer').classList.remove('hidden')
@@ -178,9 +181,21 @@ function openModal(event) {
     
     document.querySelector('.edit-input').value = todoItemText
 
+    document.querySelector('.saveNoteBtn').setAttribute('data-id', todoId)
+
     Array.from(document.querySelectorAll('.modal-action')).forEach(el => {
         el.setAttribute('data-id', todoId)
     })
+
+    //Fetch notes to fill textarea:
+  
+    const response = await fetch(`/todos/getTodoNote?id=${todoId}`)
+    const data = await response.json()
+    console.log(data)
+    
+    if (data.note === "Note doesn't exist.") notesTextArea.textContent = "Add notes."
+        else notesTextArea.textContent = data.note
+
 }
 
 function closeModal() {
@@ -190,4 +205,34 @@ function closeModal() {
     Array.from(todoItemsAll).forEach((el)=>{
         el.addEventListener('click', openModal)
     })
+
+    notesTextArea.textContent = ''
+}
+
+
+
+notesTextArea.addEventListener('input', () => {
+    changedText = notesTextArea.value;
+    notesTextArea.textContent = changedText
+  });
+
+async function addTodoNote() {
+    const todoId = this.dataset.id
+    const noteText = document.querySelector('.notesTextArea').textContent
+    
+    try {
+        const response = await fetch('todos/addTodoNote', {
+            method: 'post',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                'todoId': todoId,
+                'note': noteText
+            })
+        })
+        const data = await response.json()
+        console.log(data)
+        location.reload()
+    } catch (error) {
+        console.log(error)
+    }
 }

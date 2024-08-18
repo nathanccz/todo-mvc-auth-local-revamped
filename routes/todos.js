@@ -21,4 +21,8 @@ router.put('/markNotImportant', todosController.markNotImportant)
 
 router.get('/getImportant', todosController.getImportant)
 
+router.post('/addTodoNote', todosController.addTodoNote)
+
+router.get('/getTodoNote', todosController.getTodoNote)
+
 module.exports = router

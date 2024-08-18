@@ -179,11 +179,13 @@
                 </li>
                 <div class="divider m-0"></div>
                 <li class="nohover">
-                    <textarea class="textarea textarea-primary w-full mb-3"></textarea>
-                    <div class="flex justify-end gap-3">
+                    <textarea class="textarea textarea-primary w-full mb-2 notesTextArea"></textarea>
+                    <span>Last updated at blah blah blah</span>
+                    <div class="flex justify-end gap-3 mt-4">
                         <button class="btn btn-outline px-8 py-2">View Notes</button>
-                        <button class="btn btn-outline btn-accent px-8 py-2">Save</button>
+                        <button class="btn btn-outline btn-accent px-8 py-2 saveNoteBtn" data-id="">Save</button>
                     </div>
+                    
                 </li>
                 <div class="divider m-0"></div>
                 <li onclick="del_modal.showModal()">

@@ -1,4 +1,5 @@
 const Todo = require('../models/Todo')
+const Note = require('../models/Note')
 
 module.exports = {
     getTodos: async (req,res)=>{
@@ -99,6 +100,27 @@ module.exports = {
             const important = todoItems.length
             console.log(todoItems)
             res.render('todos.ejs', {todos: todoItems, user: req.user, important, onlyImportant: true})
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    addTodoNote: async (req, res) => {
+    
+        try{
+            await Note.create({note: req.body.note, userId: req.user.id, todoId: req.body.todoId})
+            console.log('Note has been added!')
+            res.redirect('/todos')
+        }catch(err){
+            console.log(err)
+        }
+    },
+    getTodoNote: async (req, res) => {
+        console.log(req.query.id)
+        try {
+            const notes = await Note.find({userId: req.user.id, todoId: req.query.id})
+            console.log(notes)
+            if (notes.length === 0) return res.json({"note": "Note doesn't exist."})
+            else return res.json({"note": notes[0].note})
         } catch (error) {
             console.log(error)
         }
