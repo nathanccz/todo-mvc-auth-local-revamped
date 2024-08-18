@@ -2269,6 +2269,10 @@ html {
   height: 80%;
 }
 
+.h-52 {
+  height: 13rem;
+}
+
 .h-auto {
   height: auto;
 }

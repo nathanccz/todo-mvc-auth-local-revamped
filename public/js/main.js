@@ -10,6 +10,7 @@ const todoItemsAll = document.querySelectorAll('.todoItem')
 const closeButton = document.querySelector('.chevron')
 const notesTextArea = document.querySelector('.notesTextArea')
 const lastUpdatedSpan = document.querySelector('.lastUpdated')
+const deleteNoteBtn = document.querySelector('.del-note')
 
 Array.from(deleteBtn).forEach((el)=>{
     el.addEventListener('click', deleteTodo)
@@ -49,10 +50,12 @@ Array.from(todoItemsAll).forEach((el)=>{
 
 closeButton.addEventListener('click', closeModal)
 
+deleteNoteBtn.addEventListener('click', deleteNote)
+
 document.querySelector('.saveNoteBtn').addEventListener('click', addTodoNote)
 
 window.onload = (event) => {
-    console.log(this.childNodes)
+    
     if (localStorage.getItem('todoId')) {
         let todoId = localStorage.getItem('todoId')
         let todoItem = localStorage.getItem('todoItem')
@@ -75,6 +78,7 @@ async function deleteTodo(){
         })
         const data = await response.json()
         console.log(data)
+        localStorage.clear()
         location.reload()
     }catch(err){
         console.log(err)
@@ -206,7 +210,6 @@ async function openModal(event, todoIdFromLS, todoItemFromLS) {
   
     const response = await fetch(`/todos/getTodoNote?id=${todoId}`)
     const data = await response.json()
-    console.log(data)
     
     if (data.note === "Note doesn't exist.") notesTextArea.textContent = "Add notes."
         else {
@@ -265,6 +268,25 @@ async function addTodoNote() {
         localStorage.setItem('todoId', todoId)
         localStorage.setItem('todoItem', todoItem)
         location.reload()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function deleteNote() {
+    const todoId = this.parentNode.dataset.id
+
+    try {
+       const response = await fetch('todos/deleteNote', {
+            method: 'delete',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                'todoId': todoId,
+            })
+       }) 
+       const data = await response.json()
+       console.log(data)
+       location.reload()
     } catch (error) {
         console.log(error)
     }

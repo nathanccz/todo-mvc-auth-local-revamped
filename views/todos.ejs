@@ -179,10 +179,10 @@
                 </li>
                 <div class="divider m-0"></div>
                 <li class="nohover">
-                    <textarea class="textarea textarea-primary w-full mb-2 notesTextArea"></textarea>
+                    <textarea class="textarea textarea-primary w-full mb-2 notesTextArea h-52"></textarea>
                     <span class="lastUpdated text-sm"></span>
                     <div class="flex justify-end gap-3 mt-4">
-                        <button class="btn btn-outline px-8 py-2">View Notes</button>
+                        <button class="btn btn-outline px-8 py-2" onclick="clear_modal.showModal()">Clear Notes</button>
                         <button class="btn btn-outline btn-accent px-8 py-2 saveNoteBtn" data-id="">Save</button>
                     </div>
                     
@@ -225,6 +225,20 @@
                     </form>
                     <button class="btn edit">Change</button>
                 </div>
+            </div>
+        </dialog>
+
+        <dialog id="clear_modal" class="modal">
+            <div class="modal-box">
+                <h3 class="text-lg font-bold">Clear Note?</h3>
+                <p class="py-4">This note will be permanently deleted.</p>
+                <div class="modal-action" data-id="">
+                    <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn">Cancel</button>
+                    </form>
+                    <button class="btn del-note">Delete</button>
+                </div> 
             </div>
         </dialog>
     

@@ -139,5 +139,14 @@ module.exports = {
         } catch (error) {
             console.log(error)
         }
+    },
+    deleteNote: async (req, res) => {
+        try {
+            await Note.findOneAndDelete({userId: req.user.id, todoId: req.body.todoId})
+            console.log('Note deleted')
+            res.json('Note deleted.')
+        } catch (error) {
+            console.log(error)
+        }
     }
 }    
