@@ -11,6 +11,9 @@ const closeButton = document.querySelector('.chevron')
 const notesTextArea = document.querySelector('.notesTextArea')
 const lastUpdatedSpan = document.querySelector('.lastUpdated')
 const deleteNoteBtn = document.querySelector('.del-note')
+const dateInput = document.getElementById('date-picker')
+const saveDateBtn = document.querySelector('.saveDateBtn')
+const deleteDateBtn = document.querySelector('.del-date')
 
 Array.from(deleteBtn).forEach((el)=>{
     el.addEventListener('click', deleteTodo)
@@ -52,6 +55,10 @@ closeButton.addEventListener('click', closeModal)
 
 deleteNoteBtn.addEventListener('click', deleteNote)
 
+saveDateBtn.addEventListener('click', saveDueDate)
+
+deleteDateBtn.addEventListener('click', deleteDueDate)
+
 document.querySelector('.saveNoteBtn').addEventListener('click', addTodoNote)
 
 window.onload = (event) => {
@@ -62,6 +69,16 @@ window.onload = (event) => {
         openModal(event, todoId, todoItem)
     }
 };
+
+//Date format conversion
+
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
+    'August', 'September', 'October', 'November', 'December']
+
+function formatDate(str) {
+    let arr = str.split('-')
+    return `${months[+arr[1] - 1]} ${+arr[2]}, ${arr[0]}`
+}
 
 
 
@@ -181,12 +198,25 @@ async function markNotImportant() {
     }
 }
 
+function dateFormat(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+  
+    return `${year}-${month}-${day}`;
+  }
+
 async function openModal(event, todoIdFromLS, todoItemFromLS) {
 
     if (event.target.tagName === 'I' || event.target.tagName === 'INPUT') return
 
     document.querySelector('.my-drawer').classList.remove('hidden')
     document.getElementById('pageWrapper').style.opacity = .6
+
+    let today = dateFormat(new Date())
+
+    dateInput.value = today
+    dateInput.setAttribute('min', today)
 
     todoItemsAll.forEach(el => el.removeEventListener('click', openModal))
 
@@ -203,10 +233,22 @@ async function openModal(event, todoIdFromLS, todoItemFromLS) {
     document.querySelector('.my-drawer-header').textContent = todoItemText
     document.querySelector('.edit-input').value = todoItemText
     document.querySelector('.saveNoteBtn').setAttribute('data-id', todoId)
+    document.querySelector('.saveDateBtn').setAttribute('data-id', todoId)
 
     Array.from(document.querySelectorAll('.modal-action')).forEach(el => {
         el.setAttribute('data-id', todoId)
     })
+
+    //Fetch due date:
+
+    const dueDateRes = await fetch(`todos/getDueDate?id=${todoId}`)
+    const dueDateData = await dueDateRes.json()
+
+    console.log(dueDateData)
+
+    if (dueDateData.dueDate) document.querySelector('.currentlyDue').textContent = 'Due:' + ' ' + formatDate(dueDateData.dueDate)
+    
+    //Fetch notes:
   
     const response = await fetch(`/todos/getTodoNote?id=${todoId}`)
     const data = await response.json()
@@ -229,6 +271,7 @@ function closeModal() {
 
     notesTextArea.textContent = ''
     lastUpdatedSpan.textContent = ''
+    document.querySelector('.currentlyDue').textContent = ''
 
     localStorage.clear()
 }
@@ -275,6 +318,7 @@ async function addTodoNote() {
 
 async function deleteNote() {
     const todoId = this.parentNode.dataset.id
+    const todoItem = document.querySelector('.my-drawer-header').textContent
 
     try {
        const response = await fetch('todos/deleteNote', {
@@ -286,8 +330,57 @@ async function deleteNote() {
        }) 
        const data = await response.json()
        console.log(data)
+       localStorage.setItem('todoId', todoId)
+       localStorage.setItem('todoItem', todoItem)
        location.reload()
     } catch (error) {
         console.log(error)
     }
+}
+
+async function saveDueDate() {
+    const todoId = this.dataset.id
+    const date = dateInput.value
+    const todoItem = document.querySelector('.my-drawer-header').textContent
+
+    try {
+        const response = await fetch('todos/addDueDate', {
+            method: 'put',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                'todoId': todoId,
+                'dueDate': date
+            })
+        })
+        const data = await response.json()
+        console.log(data)
+        localStorage.setItem('todoId', todoId)
+        localStorage.setItem('todoItem', todoItem)
+        location.reload()
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function deleteDueDate() {
+    const todoId = this.parentNode.dataset.id
+    const todoItem = document.querySelector('.my-drawer-header').textContent
+
+    try {
+        const response = await fetch('todos/deleteDueDate', {
+             method: 'put',
+             headers: {'Content-type': 'application/json'},
+             body: JSON.stringify({
+                 'todoId': todoId,
+             })
+        }) 
+        const data = await response.json()
+        console.log(data)
+        localStorage.setItem('todoId', todoId)
+        localStorage.setItem('todoItem', todoItem)
+        location.reload()
+     } catch (error) {
+         console.log(error)
+     }
+
 }

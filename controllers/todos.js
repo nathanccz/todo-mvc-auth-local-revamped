@@ -16,7 +16,7 @@ module.exports = {
     },
     createTodo: async (req, res)=>{
         try{
-            await Todo.create({todo: req.body.todoItem, completed: false, important: false, userId: req.user.id})
+            await Todo.create({todo: req.body.todoItem, completed: false, important: false, dueDate: null, userId: req.user.id})
             console.log('Todo has been added!')
             res.redirect('/todos')
         }catch(err){
@@ -145,6 +145,38 @@ module.exports = {
             await Note.findOneAndDelete({userId: req.user.id, todoId: req.body.todoId})
             console.log('Note deleted')
             res.json('Note deleted.')
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    addDueDate: async (req, res) => {
+        try {
+            await Todo.findOneAndUpdate({userId: req.user.id, _id: req.body.todoId}, {
+                dueDate: req.body.dueDate
+            })
+            console.log('Due date saved!')
+            res.json('Due date saved!')
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    getDueDate: async (req, res) => {
+        
+        try {
+            const result = await Todo.find({userId: req.user.id, _id: req.query.id})
+            console.log(result)
+            res.json({dueDate: result[0].dueDate})
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    deleteDueDate: async (req, res) => {
+        try {
+            await Todo.findOneAndUpdate({userId: req.user.id, _id: req.body.todoId}, {
+                dueDate: null
+            })
+            console.log('Due date deleted!')
+            res.json('Due date deleted!')
         } catch (error) {
             console.log(error)
         }

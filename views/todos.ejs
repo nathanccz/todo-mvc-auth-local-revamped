@@ -132,8 +132,8 @@
                 <i class="fa-solid fa-chevron-right"></i>
             </div>
             
-            <h2 class="my-drawer-header text-2xl font-bold mb-5 mt-2 w-80"></h2>
-    
+            <h2 class="my-drawer-header text-2xl font-bold mb-1 mt-2 w-80"></h2>
+            <h4 class="currentlyDue mb-5"></h4>
             <ul class="flex flex-col gap-3">
                 <li>
                     <a>
@@ -171,19 +171,24 @@
                         <span>Due Tomorrow</span>
                     </a>
                 </li>
-                <li>
-                    <a>
+                <li class="nohover">
+                    <a class="ml-2">
                         <i class="fa-solid fa-calendar-days"></i>
-                        <span>Pick a Due Date</span>
+                        <label for="date-picker">Pick a Due Date</label>
+                        <input type="date" id="date-picker" min="" data-date="">
                     </a>
+                    <div class="flex justify-end gap-3 mt-4">
+                        <button class="btn btn-outline px-8 py-1" onclick="clear_date_modal.showModal()">Clear Due Date</button>
+                        <button class="btn btn-outline btn-accent px-8 py-2 saveDateBtn" data-id="">Save Date</button>
+                    </div>
                 </li>
                 <div class="divider m-0"></div>
                 <li class="nohover">
                     <textarea class="textarea textarea-primary w-full mb-2 notesTextArea h-52"></textarea>
                     <span class="lastUpdated text-sm"></span>
                     <div class="flex justify-end gap-3 mt-4">
-                        <button class="btn btn-outline px-8 py-2" onclick="clear_modal.showModal()">Clear Notes</button>
-                        <button class="btn btn-outline btn-accent px-8 py-2 saveNoteBtn" data-id="">Save</button>
+                        <button class="btn btn-outline px-8 py-1" onclick="clear_modal.showModal()">Clear Notes</button>
+                        <button class="btn btn-outline btn-accent px-8 py-2 saveNoteBtn" data-id="">Save Note</button>
                     </div>
                     
                 </li>
@@ -241,9 +246,24 @@
                 </div> 
             </div>
         </dialog>
+
+        <dialog id="clear_date_modal" class="modal">
+            <div class="modal-box">
+                <h3 class="text-lg font-bold">Clear Due Date?</h3>
+                <p class="py-4">This due date will be permanently deleted.</p>
+                <div class="modal-action" data-id="">
+                    <form method="dialog">
+                    <!-- if there is a button in form, it will close the modal -->
+                    <button class="btn">Cancel</button>
+                    </form>
+                    <button class="btn del-date">Delete</button>
+                </div> 
+            </div>
+        </dialog>
     
     <script src="https://kit.fontawesome.com/45ea450325.js" crossorigin="anonymous"></script>
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
     
 </body>
 </html>

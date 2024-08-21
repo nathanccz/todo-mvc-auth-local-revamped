@@ -29,4 +29,10 @@ router.put('/updateTodoNote', todosController.updateTodoNote)
 
 router.delete('/deleteNote', todosController.deleteNote)
 
+router.put('/addDueDate', todosController.addDueDate)
+
+router.get('/getDueDate', todosController.getDueDate)
+
+router.put('/deleteDueDate', todosController.deleteDueDate)
+
 module.exports = router
