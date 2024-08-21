@@ -5,11 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <% if (onlyImportant) { %>
-    <link rel="stylesheet" href="../css/output.css">
-    <% } else { %>
     <link rel="stylesheet" href="css/output.css">
-    <% } %>
 </head>
     
     <body class="relative">
@@ -42,7 +38,7 @@
                     </li>
                     
                     <li>
-                        <a href="todos/getImportant" class="sidebarItem flex justify-between items-center">
+                        <a href="/todos?type=important" class="sidebarItem flex justify-between items-center">
                             <div>
                                 <i class="fa-solid fa-star"></i>
                                 <span class="ml-3">Important</span>
@@ -55,14 +51,14 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://www.google.com" target="_blank" class="sidebarItem flex justify-between items-center">
+                        <a href="/todos?type=planned" class="sidebarItem flex justify-between items-center">
                             <div>
                                 <i class="fa-regular fa-calendar-days"></i> 
                                 <span class="ml-3">Planned</span>
                             </div>
                             <div class="avatar placeholder">
                                 <div class="bg-neutral text-neutral-content w-8 rounded-full mr-4">
-                                <span class="text-xs font-bold">UI</span>
+                                <span class="text-xs font-bold"><%=planned%></span>
                                 </div>
                             </div> 
                         </a>
@@ -83,7 +79,7 @@
             </aside>
 
             <main class="p-10 bg-slate-900 w-full h-screen">
-                <h1 class="text-4xl font-bold mb-2">Today</h1>
+                <h1 class="text-4xl font-bold mb-2"><%= onlyImportant === true ? 'Important' : onlyPlanned === true ? 'Planned' : 'Today'%></h1>
                 <span>August 14, 2024</span>
 
                 <% if (todos.length > 0) { %>
@@ -109,9 +105,9 @@
             
 
                 <% } else {%>  
-        
-                    <h2>There is nothing here, yet.</h2>
-        
+                    <div class="todoItems h-4/5 overflow-auto rounded">
+                        <h2 class="mt-8 font-bold">There is nothing here, yet.</h2>
+                    </div>
                 <% } %> 
 
 

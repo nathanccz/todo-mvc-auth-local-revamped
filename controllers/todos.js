@@ -4,14 +4,39 @@ const moment = require('moment')
 
 module.exports = {
     getTodos: async (req,res)=>{
-        console.log(req.user)
-        try{
-            const todoItems = await Todo.find({userId:req.user.id})
-            const itemsLeft = await Todo.countDocuments({userId:req.user.id, completed: false})
-            const important = await Todo.countDocuments({userId:req.user.id, important: true})
-            res.render('todos.ejs', {todos: todoItems, left: itemsLeft, user: req.user, important, onlyImportant: false})
-        }catch(err){
-            console.log(err)
+        console.log(req.query.type)
+
+        if (req.query.type === 'important') {
+            try {
+                const todoItems = await Todo.find({userId:req.user.id, important: true})
+                const important = todoItems.length
+                const planned = await Todo.countDocuments({userId:req.user.id, dueDate: { $ne: null }})
+                console.log(todoItems)
+                return res.render('todos.ejs', {todos: todoItems, user: req.user, important, onlyImportant: true, planned, onlyPlanned: false})
+            } catch (error) {
+                console.log(error)
+            }
+        } else if (req.query.type === 'planned') {
+                try {
+                    const todoItems = await Todo.find({userId:req.user.id, dueDate: { $ne: null }})
+                    const important = await Todo.countDocuments({userId:req.user.id, important: true})
+                    const planned = todoItems.length
+                    console.log(todoItems)
+                    return res.render('todos.ejs', {todos: todoItems, user: req.user, important, onlyImportant: false, planned, onlyPlanned: true})
+                } catch (error) {
+                    console.log(error)
+                }
+        } else {
+            try{
+                const todoItems = await Todo.find({userId:req.user.id})
+                const itemsLeft = await Todo.countDocuments({userId:req.user.id, completed: false})
+                const important = await Todo.countDocuments({userId:req.user.id, important: true})
+                const planned = await Todo.countDocuments({userId:req.user.id, dueDate: { $ne: null }})
+                console.log(planned)
+                res.render('todos.ejs', {todos: todoItems, left: itemsLeft, user: req.user, onlyImportant: false, important, planned, onlyPlanned: false})
+            }catch(err){
+                console.log(err)
+            }
         }
     },
     createTodo: async (req, res)=>{
@@ -90,17 +115,6 @@ module.exports = {
             })
             console.log('Marked Not Important')
             res.json('Marked Not Important')
-        } catch (error) {
-            console.log(error)
-        }
-    },
-    getImportant: async (req, res) => {
-    
-        try {
-            const todoItems = await Todo.find({userId:req.user.id, important: true})
-            const important = todoItems.length
-            console.log(todoItems)
-            res.render('todos.ejs', {todos: todoItems, user: req.user, important, onlyImportant: true})
         } catch (error) {
             console.log(error)
         }
